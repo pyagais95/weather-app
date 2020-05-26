@@ -2,12 +2,13 @@ import React from 'react'
 import Button from 'react-bootstrap/Button'
 
 export const ButtonComponent = (props) => {
-  const {name, onClick} = props
+  const {type, name, onClick, className} = props
   return (
     <div>
       <Button
-        variant="primary"
+        type={type}
         onClick={onClick}
+        className={className}
       >
         {name}
       </Button>

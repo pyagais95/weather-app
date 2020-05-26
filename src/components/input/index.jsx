@@ -1,15 +1,15 @@
 import React from 'react'
 
 const InputComponent = (props) => {
-  const {value, placeholder, onChange} = props
+  const {type,value, placeholder, onChange, className} = props
   return (
-    <div >
       <input
+        type={type}
         value={value}
         placeholder={placeholder}
         onChange={onChange}
+        className={className}
       />
-    </div>
   )
 }
 
