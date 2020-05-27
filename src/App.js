@@ -54,7 +54,6 @@ const App = () => {
     }
   }, [weather])
 
-
   const getWeather = async (event) => {
     if (city) {
       event.preventDefault()
@@ -64,34 +63,41 @@ const App = () => {
     event.preventDefault()
   }
 
-  return (
-    <div className='container-fluid d-flex align-items-center' style={{background: backgroundColor}}>
-      <div className='col'/>
-      <div className='col-8'>
-        <form className='w-100 p-2' onSubmit={getWeather}>
-          <div className='input-group d-flex justify-content-start'>
-            <InputComponent
-              placeholder='City Name'
-              type='text'
-              value={city}
-              onChange={(event) => {
-                setCity(event.target.value)
-              }}
-              className='w-50 '
-            />
-            <div className='input-group-append'>
-              <ButtonComponent
-                name='search'
-                type='submit'
-                className='btn btn-secondary btn-lg'
-              />
-            </div>
-          </div>
-        </form>
+  const adjustTemperature = (event) => {
+    const updatedWeather = {...weather}
+    updatedWeather.main.temp = event.target.value
+    setWeather(updatedWeather)
+  }
 
-        {
-          weather && weather.main ?
+  return (
+    <div className='container-fluid d-flex flex-column align-items-center justify-content-center'
+         style={{background: backgroundColor}}>
+      <div className='row w-100'>
+        <div className='col'/>
+        <div className='col-8'>
+          <form className='w-100 p-2' onSubmit={getWeather}>
+            <div className='input-group d-flex justify-content-start'>
+              <InputComponent
+                placeholder='City Name'
+                type='text'
+                value={city}
+                onChange={(event) => {
+                  setCity(event.target.value)
+                }}
+                className='w-50 p-1'
+              />
+              <div className='input-group-append'>
+                <ButtonComponent
+                  name='search'
+                  type='submit'
+                  className='btn btn-secondary btn-lg'
+                />
+              </div>
+            </div>
+          </form>
+          {weather && weather.main ?
             <Table className='table-borderless text-secondary'>
+              <tbody>
               <tr>
                 <td>Temperature</td>
                 <td>{weather.main.temp} &#8451;</td>
@@ -108,11 +114,35 @@ const App = () => {
                 <td>Pressure</td>
                 <td>{weather.main.pressure} hpa</td>
               </tr>
+              </tbody>
             </Table>
-            : null
-        }
+            : <div className='col'>
+              <p>City is not found</p>
+
+            </div>
+          }
+        </div>
+        <div className='col'/>
       </div>
-      <div className='col'/>
+
+      <div className='row fixed-bottom'>
+        <div className='col-12 d-flex justify-content-end'>
+          <div className='col-4'/>
+          <div className='col-4'/>
+          <div className='col-4 d-flex flex-column w-100 p-2'>
+            <p className='text-secondary'>Adjust Temperature</p>
+            <InputComponent
+              type='range'
+              min='-50'
+              max='50'
+              value={weather && weather.main ? weather.main.temp : 0}
+              id='formControlRange'
+              className='form-control-range w-75'
+              onChange={adjustTemperature}
+            />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

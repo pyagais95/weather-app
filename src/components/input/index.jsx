@@ -1,7 +1,7 @@
 import React from 'react'
 
 const InputComponent = (props) => {
-  const {type,value, placeholder, onChange, className} = props
+  const {type,value, placeholder, onChange, className, min, max, id, onInput} = props
   return (
       <input
         type={type}
@@ -9,6 +9,10 @@ const InputComponent = (props) => {
         placeholder={placeholder}
         onChange={onChange}
         className={className}
+        min={min}
+        max={max}
+        onInput={onInput}
+        id={id}
       />
   )
 }
